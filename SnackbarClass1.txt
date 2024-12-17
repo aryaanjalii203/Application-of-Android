@@ -1,0 +1,50 @@
+This Kotlin program demonstrates the implementation of a Snackbar in an Android app. The activity is designed to display a Snackbar with a message ("Email sent") when the user clicks the button labeled "Display Snackbar". The Snackbar also includes an "Undo" action to enhance interactivity.
+
+
+KOTLIN FILE CODE
+
+package com.example.cse224
+
+import android.os.Bundle
+import android.view.View
+import android.widget.Button
+import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import com.google.android.material.snackbar.Snackbar
+
+class SnackbarClass1 : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        setContentView(R.layout.activity_snackbar_class1)
+        var b= findViewById<Button>(R.id.btnsnackbar)
+        b.setOnClickListener { view -> Snackbar.make(view,"Email sent",Snackbar.LENGTH_LONG)
+            .setAction("undo"){    }.show()
+        }
+    }
+}
+
+
+XML FILE CODE
+
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SnackbarClass1">
+
+    <Button
+        android:id="@+id/btnsnackbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Display Snackbar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
