@@ -1,0 +1,129 @@
+This Android project file demonstrates a simple pizza ordering interface using XML for the layout and Kotlin for the backend logic. The user interface features:
+
+    A TextView for displaying the title and instructions.
+    A RadioGroup with options for selecting the pizza size (Large, Medium, Small).
+    CheckBoxes to choose toppings (Paneer, Corn, Mushroom).
+    A Button to place the order.
+
+
+KOTLIN FILE CODE
+
+package com.example.cse224
+
+import android.os.Bundle
+import android.widget.Button
+import android.widget.CheckBox
+import android.widget.RadioGroup
+import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+
+class Radiocheckclass : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        setContentView(R.layout.activity_radiocheckclass)
+        var a=findViewById<RadioGroup>(R.id.rgzsize)
+        var placeorder=findViewById<Button>(R.id.placeorder)
+        var paneer=findViewById<CheckBox>(R.id.checkBox4)
+        var corn=findViewById<CheckBox>(R.id.checkBox5)
+        var mushroom= findViewById<CheckBox>(R.id.checkBox6)
+        placeorder.setOnClickListener {
+            var size=a.checkedRadioButtonId
+            var finalsize = when(size){
+                R.id.radioButton6 -> "large"
+                R.id.radioButton4 -> "medium"
+                R.id.radioButton5 ->"small"
+                else -> "choose any one option"
+            }
+            var topping=mutableListOf<String>()
+            if (paneer.isChecked) topping.add("Paneer")
+            if (corn.isChecked) topping.add("Corn")
+            if (mushroom.isChecked) topping.add("Mushroom")
+          Toast.makeText(this,"You Selected"+ finalsize + "Pizza with toppings"+topping,Toast.LENGTH_LONG).show()
+
+        }
+    }
+}
+
+
+XML FILE CODE
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="20dp"
+    >
+
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/aclonica"
+        android:text="Select your pizza size"
+        android:textSize="48sp"
+        android:textStyle="bold" />
+
+    <RadioGroup
+        android:id="@+id/rgzsize"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/radioButton6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Large" />
+
+        <RadioButton
+            android:id="@+id/radioButton4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Medium"
+            android:textStyle="bold" />
+
+        <RadioButton
+            android:id="@+id/radioButton5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Small" />
+
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Choose the required topping"
+        android:textSize="48sp" />
+
+    <CheckBox
+        android:id="@+id/checkBox4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Paneer" />
+
+    <CheckBox
+        android:id="@+id/checkBox5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Corn" />
+
+    <CheckBox
+        android:id="@+id/checkBox6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="mushroom" />
+
+    <Button
+        android:id="@+id/placeorder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Place Order" />
+</LinearLayout>
