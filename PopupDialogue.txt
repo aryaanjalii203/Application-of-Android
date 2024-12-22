@@ -1,0 +1,69 @@
+This project demonstrates the creation of a Popup Menu in an Android app. The PopupDialogue.kt file implements a button that triggers a popup menu using PopupMenu and MenuInflater. The menu contains options like "Share" and "Delete," each displaying a toast message when selected. The associated XML layout, activity_popupdialogue.xml, centers the button using a ConstraintLayout, providing a clean and interactive UI design.
+
+
+
+KOTLIN FILE CODE
+
+package com.example.cse224
+
+import android.os.Bundle
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.widget.Button
+import android.widget.PopupMenu
+import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+
+class Popupdialogue : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        setContentView(R.layout.activity_popupdialogue)
+        val p1=findViewById<Button>(R.id.button9)
+        p1.setOnClickListener {
+            val p2 = PopupMenu(this, p1)
+            val m1: MenuInflater = p2.menuInflater
+            m1.inflate(R.menu.popup_menu, p2.menu)
+            p2.setOnMenuItemClickListener { item: MenuItem ->
+                when (item.itemId) {
+                    R.id.share -> {
+                        Toast.makeText(this, "Share clicked", Toast.LENGTH_SHORT).show()
+                        true
+                    }
+                    R.id.delete -> {
+                        Toast.makeText(this, "Delete clicked", Toast.LENGTH_SHORT).show()
+                        true
+                    }
+                    else -> false
+                }
+            }
+            p2.show()
+        }
+    }
+}
+
+
+XML FILE CODE
+
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Popupdialogue">
+
+    <Button
+        android:id="@+id/button9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
