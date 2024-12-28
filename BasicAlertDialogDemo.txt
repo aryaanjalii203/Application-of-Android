@@ -1,0 +1,59 @@
+This Kotlin project demonstrates how to create a simple Basic Alert Dialog in an Android app using AlertDialog.Builder. The project includes a button that, when clicked, displays an alert dialog with "Yes" and "No" options to confirm the user's action. Key features include:
+
+    Edge-to-edge UI with enableEdgeToEdge.
+    Proper handling of user interactions using setPositiveButton and setNegativeButton.
+    A responsive and user-friendly layout defined in XML.
+
+
+
+KOTLIN FILE CODE
+
+
+package com.example.cse224
+
+import android.os.Bundle
+import android.widget.Button
+import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+
+class BasicAlertDialog : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        setContentView(R.layout.activity_basic_alert_dialog)
+        val alert= findViewById<Button>(R.id.button6)
+        alert.setOnClickListener {
+            val b = AlertDialog.Builder(this)
+            b.setTitle("Exit")
+            b.setMessage("Do you really want to exit?")
+            b.setPositiveButton("Yes") { dialog, _ ->finish()}
+            b.setNegativeButton("No") { dialog, _ ->dialog.dismiss()}
+            b.create().show()
+    }
+        }
+    }
+
+
+XML FILE CODE
+
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".BasicAlertDialog">
+
+    <Button
+        android:id="@+id/button6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Exit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
