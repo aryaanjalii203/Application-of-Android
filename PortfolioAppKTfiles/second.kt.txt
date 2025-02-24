@@ -1,0 +1,98 @@
+package com.example.anjalisportfolio
+
+import android.os.Bundle
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.util.Properties
+import javax.mail.Authenticator
+import javax.mail.PasswordAuthentication
+import javax.mail.Session
+import javax.mail.Transport
+import javax.mail.internet.InternetAddress
+import javax.mail.internet.MimeMessage
+import android.content.Intent
+
+
+class second : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_second)
+
+        val nameEditText = findViewById<EditText>(R.id.nameEditText)
+        val emailEditText = findViewById<EditText>(R.id.emailEditText)
+        val phoneEditText = findViewById<EditText>(R.id.phoneEditText)
+        val submitButton = findViewById<Button>(R.id.submitButton)
+
+        submitButton.setOnClickListener {
+            val name = nameEditText.text.toString()
+            val email = emailEditText.text.toString()
+            val phone = phoneEditText.text.toString()
+
+            if (name.isNotEmpty() && email.isNotEmpty() && phone.isNotEmpty()) {
+                val subject = "New Contact Submission"
+                val body = "Name: $name\nEmail: $email\nPhone: $phone"
+
+                sendEmail(subject, body)
+
+                Toast.makeText(this, "Details submitted successfully!", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, MainActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+            } else {
+                Toast.makeText(this, "Please fill all the fields.", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun sendEmail(subject: String, body: String) {
+        val senderEmail = "aryaanjali203@gmail.com"
+        val senderPassword ="qakp jcii qnjv hmqc"
+        val recipientEmail = "aryaanjali203@gmail.com"
+
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                // Set email server properties
+                val props = Properties().apply {
+                    put("mail.smtp.host", "smtp.gmail.com")
+                    put("mail.smtp.port", "587")
+                    put("mail.smtp.auth", "true")
+                    put("mail.smtp.starttls.enable", "true")
+                }
+
+
+                val session = Session.getInstance(props, object : Authenticator() {
+                    override fun getPasswordAuthentication(): PasswordAuthentication {
+                        return PasswordAuthentication(senderEmail, senderPassword)
+                    }
+                })
+
+
+                val message = MimeMessage(session).apply {
+                    setFrom(InternetAddress(senderEmail))
+                    setRecipients(javax.mail.Message.RecipientType.TO, InternetAddress.parse(recipientEmail))
+                    this.subject = subject
+                    setText(body)
+                }
+
+                Transport.send(message)
+
+
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(this@second, "Email sent successfully!", Toast.LENGTH_SHORT).show()
+                }
+            } catch (e: Exception) {
+                e.printStackTrace() // Log the exception details
+
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(this@second, "Failed to send email: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+}
